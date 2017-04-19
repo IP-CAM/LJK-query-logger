@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+    <id>LJK-query-logger</id>
+    <version>1.0</version>
+    <vqmver>2.X</vqmver>
+    <author>Lucas Krupinski - lucasjkr@me.com</author>
+    <comment>
+        FOR DEBUGGING PURPOSES ONLY - this will have a noticeable impact on production systems
+
+        This VQMOD logs all database queries (and their execution times) from opencart to a logfile.
+    </comment>
+
+    <file name="system/library/db.php">
+
+        <operation info="Turn on logging for all queries sent to the query method within the DB class (so it should work with any database)">
+            <search position="replace"><![CDATA[return $this->adaptor->query($sql, $params);]]></search>
+            <add><![CDATA[
+
+        $start = microtime(true);
+        $result = $this->adaptor->query($sql, $params);
+        $msec = number_format((microtime(true) - $start) * 1000, 4, '.', ',');
+        $output = date("Y-m-d h:i:s"). " \t";
+        $output .= $msec . " msec \t";
+        $output .= $sql . " \n";
+        if (!file_exists(DIR_LOGS . 'queries.txt')) {
+            touch(DIR_LOGS . 'queries.txt');
+        }
+        $file = fopen(DIR_LOGS . 'queries.txt', 'a');
+        fwrite($file, $output);
+        fclose($file);
+
+        return $result;
+
+            ]]></add>
+        </operation>
+
+    </file>
+</modification>
