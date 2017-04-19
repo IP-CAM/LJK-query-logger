@@ -1,7 +1,8 @@
 # LJK-query-logger
 
-Logs all queries sent to Opencart's database adapter to a text file (DIR_LOGS/queries.txt);
-
 FOR DEBUGGING PURPOSES ONLY
+---------------------------
 
-Should be database agnostic.
+Logs all queries sent to Opencart's database adapter to a text file (DIR_LOGS/database.log)
+
+Should be database agnostic, as it affects the main DB class, rather than an individual adapter, and works with OC 2.2 and 2.3
