@@ -1,2 +1,7 @@
 # LJK-query-logger
-SELECT * FROM oc_url_alias WHERE `query` = 'category_id=102' 
+
+Logs all queries sent to Opencart's database adapter to a text file (DIR_LOGS/queries.txt);
+
+FOR DEBUGGING PURPOSES ONLY
+
+Should be database agnostic.
